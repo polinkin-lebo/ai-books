@@ -16,3 +16,6 @@
 .native-ios.editing #footer{bottom:var(--native-keyboard-height,0px)}
 #sendInline{display:none!important}
 @font-face{font-family:Books;src:url('fonts/YSBooks-Medium.otf');font-weight:500}@font-face{font-family:YS;src:url('fonts/YSText-Heavy.ttf');font-weight:800}#status .text{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif!important;font-weight:500!important;letter-spacing:-.165px}
+.density-track #densityFill{background:#2d2d2d}
+.density-ticks{position:absolute;inset:0;pointer-events:none}.density-ticks span{position:absolute;top:6px;width:1px;height:8px;border-radius:.5px;background:#c9c9c9}.density-ticks.filled-ticks{clip-path:inset(0 calc(100% - var(--density,100%)) 0 0)}.filled-ticks span{background:#fff}
+.hidden-controls.density-mode #footer{transform:none;opacity:1;pointer-events:none}.hidden-controls.density-mode #floating{display:none!important}

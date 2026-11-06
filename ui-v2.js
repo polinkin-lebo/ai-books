@@ -6,7 +6,7 @@ density=100;
 morning.remove();
 homeState=()=>{};
 $('#bookbar').innerHTML=`<button id="collapse" aria-label="Свернуть чтение">${icon('6d690.svg')}</button><div class="book-label"><b id="booktitle">Анна Каренина</b><span id="author">Лев Толстой</span></div><div class="header-spacer"></div><button id="settings" aria-label="Настройки чтения">${icon('b584a.svg')}</button><button id="more" aria-label="Меню книги">${icon('85b76.svg')}</button>`;
-$('#footer').innerHTML=`<button id="mini" hidden aria-label="Вернуться к чтению"><img id="miniCover" src="assets/design/666ab.png" alt=""><span class="mini-title"><b></b><small></small></span><span class="mini-spacer"></span><span class="mini-cta">К чтению</span></button><div id="progress" hidden><input id="seek" type="range" aria-label="Позиция в ленте" min="0" max="10000" step="1" value="0"></div><div class="controlrow"><button id="spark" class="round glass" aria-label="Настроить количество ИИ-вставок">${icon('4dcdf.svg')}</button><form id="queryForm" class="glass"><span id="discoverySpark">${icon('e6a43.svg')}</span><input id="ask" type="text" inputmode="text" enterkeyhint="send" autocomplete="off" spellcheck="false" aria-label="Запрос" placeholder="Что будем читать?"><button id="sendInline" type="submit" hidden aria-label="Отправить запрос">↑</button></form><div id="densityInline" class="glass" hidden><div class="density-track"><div id="densityFill"></div><img src="assets/design/6eabe.svg" alt=""></div><input aria-label="Степень ИИ" type="range" min="0" max="100" step="1" value="100"></div><button id="startAudio" class="round glass" aria-label="Включить плеер">${icon('c257f.svg')}</button><div id="audio" hidden><button id="rewind" class="glass" aria-label="Назад 15 секунд">${icon('aa08f.svg')}<small>15</small></button><button id="play" class="glass" aria-label="Пауза">${icon('ce6bc.svg')}</button><button id="forward" class="glass" aria-label="Вперёд 30 секунд">${icon('76457.svg')}<small>30</small></button></div></div><div id="context"></div>`;
+$('#footer').innerHTML=`<button id="mini" hidden aria-label="Вернуться к чтению"><img id="miniCover" src="assets/design/666ab.png" alt=""><span class="mini-title"><b></b><small></small></span><span class="mini-spacer"></span><span class="mini-cta">К чтению</span></button><div id="progress" hidden><input id="seek" type="range" aria-label="Позиция в ленте" min="0" max="10000" step="1" value="0"></div><div class="controlrow"><button id="spark" class="round glass" aria-label="Настроить количество ИИ-вставок">${icon('4dcdf.svg')}</button><form id="queryForm" class="glass"><span id="discoverySpark">${icon('e6a43.svg')}</span><input id="ask" type="text" inputmode="text" enterkeyhint="send" autocomplete="off" spellcheck="false" aria-label="Запрос" placeholder="Что будем читать?"><button id="sendInline" type="submit" hidden aria-label="Отправить запрос">↑</button></form><div id="densityInline" class="glass" hidden><div class="density-track"><div id="densityFill"></div><div class="density-ticks"></div><div class="density-ticks filled-ticks"></div></div><input aria-label="Степень ИИ" type="range" min="0" max="100" step="1" value="100"></div><button id="startAudio" class="round glass" aria-label="Включить плеер">${icon('c257f.svg')}</button><div id="audio" hidden><button id="rewind" class="glass" aria-label="Назад 15 секунд">${icon('aa08f.svg')}<small>15</small></button><button id="play" class="glass" aria-label="Пауза">${icon('ce6bc.svg')}</button><button id="forward" class="glass" aria-label="Вперёд 30 секунд">${icon('76457.svg')}<small>30</small></button></div></div><div id="context"></div>`;
 $('#floating').innerHTML=icon('4dcdf.svg');$('#floating').classList.add('glass');
 const discovery=document.createElement('div');discovery.id='discovery';discovery.hidden=true;
 discovery.innerHTML=`<img class="discovery-avatar" src="assets/design/b686d.png" alt="Полина"><h2>Доброе утро, Полина!<br>найдем что-то новое?</h2><div class="discovery-recs"><div class="discovery-columns"></div></div><h3>Хотели прочитать</h3><div class="discovery-saved"><div class="discovery-columns"></div></div>`;
@@ -36,12 +36,12 @@ function setDensity(value){
  const visible=[...sections.values()].filter(s=>s.style.display!=='none');let anchor=visible.find(s=>s.offsetTop+s.offsetHeight>sc.scrollTop+100);const delta=anchor?sc.scrollTop-anchor.offsetTop:0;density=Number(value);scrollLock=true;
  insetIds.forEach((id,i)=>sections.get(id).style.display=density>=levels[i]?'':'none');
  if(anchor&&anchor.style.display!=='none')sc.scrollTop=anchor.offsetTop+delta;else if(anchor){const next=[...sections.values()].find(s=>s.style.display!=='none'&&s.offsetTop>=sc.scrollTop);if(next)sc.scrollTop=next.offsetTop;}
- $('#densityFill').style.width=density+'%';$('#densityInline input').value=density;setTimeout(()=>scrollLock=false,180);update();
+ $('#densityFill').style.width=density+'%';$('#densityInline').style.setProperty('--density',density+'%');$('#densityInline input').value=density;setTimeout(()=>scrollLock=false,180);update();
 }
 $('#densityInline input').oninput=e=>setDensity(e.target.value);
-$('#spark').onclick=()=>{if(editing)endEditing();densityOpen=!densityOpen;showControls();update();};
+$('#spark').onclick=()=>{if(editing)endEditing();densityOpen=!densityOpen;update();};
 $('#startAudio').onclick=()=>{audio=true;playing=true;showControls();update();};
-$('#play').onclick=()=>{playing=!playing;update();};
+$('#play').onclick=()=>{playing=false;audio=false;update();};
 $('#rewind').onclick=()=>{pos=Math.max(0,pos-15);sc.scrollTop=Math.max(0,sc.scrollTop-93);showControls();};
 $('#forward').onclick=()=>{pos+=30;sc.scrollTop=Math.min(sc.scrollHeight-sc.clientHeight,sc.scrollTop+186);showControls();};
 $('#collapse').onclick=()=>{endEditing();saved=sc.scrollTop;suspendedBook=book;collapsed=true;densityOpen=false;scrollLock=true;sc.style.visibility='hidden';discovery.hidden=false;showControls();update();setTimeout(()=>scrollLock=false,180);};
@@ -69,13 +69,15 @@ update=function(){
  const current=[...labels].reverse().find(([,id])=>sections.get(id).style.display!=='none'&&sc.scrollTop+180>=sections.get(id).offsetTop);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.id===current?.[1]));
 };
 $('#reset').onclick=()=>{endEditing();close();document.querySelectorAll('.reply').forEach(r=>r.remove());collapsed=false;audio=false;playing=true;densityOpen=false;discovery.hidden=true;sc.style.visibility='visible';fontSize=21;document.querySelectorAll('.reader p').forEach(p=>p.style.cssText='');setDensity(100);go('4079:21636',{instant:true});};
-$('#floating').onclick=()=>{showControls();};
+$('#floating').onclick=()=>{densityOpen=true;update();};
 setDensity(100);update();window.prototype.getState=()=>({mode,book,collapsed,audio,playing,density,densityOpen,editing,hidden,scroll:sc.scrollTop});
 
 if(nativeIOS&&window.visualViewport)visualViewport.addEventListener('resize',()=>{phone.style.setProperty('--native-keyboard-height',Math.max(0,innerHeight-visualViewport.height)+'px');});
 sections.get('4079:21688').style.marginTop='-8px';
 // Обводки и исходная векторная оценка сохранены из макета.
-for(const id of ['4079:21659','4079:21660','4079:21661','4079:21764']){const el=byId.get(id)?.el;if(el)el.style.boxShadow='inset 0 0 0 .5px rgb(37,143,172)';}
+for(const id of ['4079:21659','4079:21660','4079:21661','4079:21764']){const el=byId.get(id)?.el;if(el){el.style.boxShadow='inset 0 0 0 .5px rgb(37,143,172)';el.style.background='transparent';}}
 const sourceRating=byId.get('4079:21803').el;
 byId.get('4079:21801').el.append(sourceRating);rating.remove();
 for(let value=1;value<=5;value++){const b=document.createElement('button');b.className='source-rating-hit';b.setAttribute('aria-label','Оценка '+value+' из 5');b.style.cssText='position:absolute;top:0;left:'+((value-1)*52)+'px;width:48px;height:48px;background:transparent;padding:0';b.onclick=()=>{sourceRating.dataset.rating=value;toast('Ваша оценка: '+value+' из 5')};sourceRating.append(b);}
+
+for(const layer of document.querySelectorAll('.density-ticks')){for(let i=0;i<10;i++){const tick=document.createElement('span');tick.style.left=(8.13+i*(84.1/9))+'%';layer.append(tick);}}
