@@ -17,3 +17,5 @@
 .native-ios.editing #footer{bottom:calc(var(--native-keyboard-height,290px) - 31px)!important}.native-ios.editing #footer .controlrow{bottom:43px!important}.native-ios.editing #spark.persistent-spark{bottom:calc(var(--native-keyboard-height,290px) + 12px)!important}
 #phone.editing #progress #seek{pointer-events:none}
 #phone.home-mode.editing .spark-space{display:block}
+/* Editing contains only the empty input/caret and the Send button. */
+#phone.editing #spark.persistent-spark{opacity:0;visibility:hidden;pointer-events:none}#phone.editing #discoverySpark{display:none!important}.spark-space{transition:width .24s,flex-basis .24s}#phone.editing .spark-space{width:0;flex-basis:0}#phone.editing #queryForm{width:230px!important;margin-left:0}
