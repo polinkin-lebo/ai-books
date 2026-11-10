@@ -19,3 +19,10 @@
 .density-track #densityFill{background:#2d2d2d}
 .density-ticks{position:absolute;inset:0;pointer-events:none}.density-ticks span{position:absolute;top:6px;width:1px;height:8px;border-radius:.5px;background:#c9c9c9}.density-ticks.filled-ticks{clip-path:inset(0 calc(100% - var(--density,100%)) 0 0)}.filled-ticks span{background:#fff}
 .hidden-controls.density-mode #footer{transform:none;opacity:1;pointer-events:none}.hidden-controls.density-mode #floating{display:none!important}
+/* A single, stationary sparkle button; the other controls animate behind it. */
+.hidden-controls.density-mode #footer{transform:translateY(180px);opacity:0;pointer-events:none}
+.hidden-controls.density-mode #footer:has(#densityInline:not([hidden])){transform:none;opacity:1}
+#spark.persistent-spark{position:absolute;left:16px;bottom:43px;width:36px;height:36px;border-radius:1000px;padding:8px;display:flex;align-items:center;justify-content:center;z-index:16;transition:bottom .24s;box-shadow:0 1px 10px #0000001a}
+#spark.persistent-spark[hidden],.home-mode #spark.persistent-spark{display:none}.spark-space{width:36px;height:36px;flex:0 0 36px}.home-mode .spark-space{display:none}
+#iosKeyboard{height:217px;padding:8px 3px}.keyboard-accessory,.keyboard-bottom,.home-indicator{display:none!important}#iosKeyboard>.key-row:last-child{margin-bottom:0}
+.editing #footer{bottom:217px}.editing #spark.persistent-spark{bottom:233px}.native-ios.editing #spark.persistent-spark{bottom:calc(var(--native-keyboard-height,0px) + 16px)}
