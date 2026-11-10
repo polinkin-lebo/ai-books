@@ -57,7 +57,7 @@ $('#seek').onpointerup=endSeek;$('#seek').onpointercancel=endSeek;$('#seek').onc
 update=function(){
  const y=sc.scrollTop+150,rec=sections.get('4079:21824').offsetTop,next=sections.get('4079:21846').offsetTop,start=sections.get('4079:21681').offsetTop;
  book=collapsed?suspendedBook:y>=next?'chekhov':'anna';mode=collapsed?'discovery':y<start?'home':density>0&&sections.get('4079:21824').style.display!=='none'&&y>=rec&&y<next?'recommend':'reading';
- const reading=mode==='reading'||dragging,disco=mode==='discovery';phone.classList.toggle('discovery-mode',disco);phone.classList.toggle('home-mode',!reading);phone.classList.toggle('density-mode',densityOpen);phone.classList.toggle('audio-mode',audio&&reading&&!densityOpen&&!editing);
+ const visibleBook=typeof visibleReadingBook==='function'?visibleReadingBook():null;if(visibleBook&&!collapsed){book=visibleBook;mode='reading';}const reading=mode==='reading'||dragging,disco=mode==='discovery';phone.classList.toggle('discovery-mode',disco);phone.classList.toggle('home-mode',!reading);phone.classList.toggle('density-mode',densityOpen);phone.classList.toggle('audio-mode',audio&&reading&&!densityOpen&&!editing);
  $('#bookbar').hidden=!reading;$('#booktitle').textContent=book==='anna'?'Анна Каренина':'Дама с собачкой';$('#author').textContent=book==='anna'?'Лев Толстой':'Антон Чехов';
  $('#mini').hidden=!disco;$('#mini .mini-title b').textContent=$('#booktitle').textContent;$('#mini .mini-title small').textContent=$('#author').textContent;$('#miniCover').src=book==='anna'?'assets/4079-21644.png':'assets/design/666ab.png';
  $('#footer').classList.toggle('home',!reading);$('#spark').hidden=disco;$('#queryForm').hidden=densityOpen;$('#densityInline').hidden=!densityOpen;
