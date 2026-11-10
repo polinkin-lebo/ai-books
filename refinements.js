@@ -38,7 +38,7 @@ const annaText=['4079:21688','4079:21721','4079:21735','4079:21745','4079:21766'
 let scrubBook=null;
 function bookSegments(name){const max=Math.max(0,sc.scrollHeight-sc.clientHeight);return(name==='anna'?annaText:['4079:21846']).map(id=>{const el=sections.get(id);const start=Math.max(0,Math.min(max,el.offsetTop-102));const end=Math.max(start,Math.min(max,el.offsetTop+el.offsetHeight-102));return{start,end,length:end-start};});}
 function activeReadingBook(){if(collapsed||mode==='home')return null;const y=sc.scrollTop+102,visible=visibleReadingBook();if(visible==='chekhov')return'chekhov';if(visible==='anna'&&y<sections.get('4079:21681').offsetTop)return'anna';if(y>=sections.get('4079:21846').offsetTop-1)return'chekhov';const end=sections.get('4079:21795');if(y>=sections.get('4079:21681').offsetTop-1&&y<end.offsetTop+end.offsetHeight-1)return'anna';return null;}
-function bookPosition(name){const segments=bookSegments(name);const total=segments.reduce((n,s)=>n+s.length,0);const distance=segments.reduce((n,s)=>n+Math.max(0,Math.min(s.length,sc.scrollTop-s.start)),0);return{segments,total,distance};}
+function bookPosition(name){const segments=bookSegments(name);const total=segments.reduce((n,s)=>n+s.length,0);const rawDistance=segments.reduce((n,s)=>n+Math.max(0,Math.min(s.length,sc.scrollTop-s.start)),0),distance=rawDistance<1?0:rawDistance;return{segments,total,distance};}
 function seekBook(name,distance){const {segments,total}=bookPosition(name);let remaining=Math.max(0,Math.min(total,distance));for(let i=0;i<segments.length;i++){const segment=segments[i];if(remaining<=segment.length||i===segments.length-1){sc.scrollTop=segment.start+remaining;break;}remaining-=segment.length;}last=sc.scrollTop;}
 $('#seek').setAttribute('aria-label','Прогресс чтения книги');
 $('#seek').onpointerdown=()=>{scrubBook=activeReadingBook();dragging=true;scrollLock=true;$('#progress').classList.add('dragging');showControls();};
@@ -52,11 +52,15 @@ update=function(){updateBeforeRefinements();const active=activeReadingBook(),nam
 // Small covers retain the original rounded slots.
 for(const id of ['4079:21644','4079:21651']){const el=byId.get(id).el;el.style.borderRadius='4px';el.style.overflow='hidden';}
 Object.assign(byId.get('4079:21799').el.style,{left:'0',width:'335px',textAlign:'center',letterSpacing:'2px'});
-const bookIntro=sections.get('4079:21671');bookIntro.classList.add('book-intro');bookIntro.style.height='142px';bookIntro.innerHTML='<h2>Анна Каренина</h2><p>Лев Толстой</p>';
+const bookIntro=sections.get('4079:21671');bookIntro.classList.add('book-intro');bookIntro.style.height='155px';bookIntro.innerHTML=bookHeading('Анна Каренина','Лев Толстой','XXXIV');
 function visibleReadingBook(){if(collapsed)return null;const viewportTop=sc.scrollTop+40,viewportBottom=sc.scrollTop+772;for(const id of [...annaText,'4079:21846']){const section=sections.get(id);if(section.style.display==='none')continue;for(const p of section.querySelectorAll('p')){const top=section.offsetTop+p.offsetTop,bottom=top+p.offsetHeight;if(top<viewportBottom&&bottom>viewportTop)return id==='4079:21846'?'chekhov':'anna';}}return null;}
 for(const img of document.querySelectorAll('.discovery-book>img,.book-option>img')){const frame=document.createElement('span');frame.className='cover-frame';if(/(?:slow|thinking|talk)\.(?:jpg|png)/.test(img.dataset.coverKey||img.src))frame.classList.add('light-cover');img.replaceWith(frame);frame.append(img);}
 for(const img of discovery.querySelectorAll('.started-book>img'))img.style.borderRadius='4px';
 const sparkBeforeMorph=$('#spark').onclick;$('#spark').onclick=()=>{if(mode==='home'||collapsed){composer();return;}sparkBeforeMorph();};
 function spaceBookShelves(){for(const section of document.querySelectorAll('.books-section')){const row=section.querySelector('.book-carousel'),height=Math.max(...[...row.children].map(e=>e.offsetHeight));row.style.height=height+'px';section.style.height=Math.max(section.offsetHeight,58+height+24)+'px';}update();}
 document.fonts.ready.then(spaceBookShelves);
+// Titles and keyboard geometry are taken from the supplied Figma frames.
+function bookHeading(title,author,chapter){return '<div class="book-title-author"><h2>'+title+'</h2><div class="book-author">'+author+'</div></div><div class="book-chapter">Глава '+chapter+'</div>';}
+const chekhovReader=sections.get('4079:21846');chekhovReader.querySelector('h2').remove();chekhovReader.querySelector('div').remove();const chekhovHeading=document.createElement('div');chekhovHeading.className='book-heading';chekhovHeading.innerHTML=bookHeading('Дама с собачкой','Антон Чехов','I');chekhovReader.prepend(chekhovHeading);chekhovReader.style.paddingTop='0';
+const keyboardSend=document.createElement('button');keyboardSend.id='keyboardSend';keyboardSend.type='submit';keyboardSend.setAttribute('form','queryForm');keyboardSend.textContent='Отправить';$('.controlrow').append(keyboardSend);
 update();
