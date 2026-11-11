@@ -27,3 +27,7 @@
 /* Only the feed scrolls; off-screen keyboard content cannot scroll the phone shell. */
 #phone,#shell{overflow:clip}
 #audioDock #audio[aria-hidden="true"] button{pointer-events:none}
+/* A disabled rewind fades out only while the reading panels are hidden. */
+#phone.hidden-controls.audio-mode #audioDock #rewind:disabled{opacity:0;pointer-events:none}#audioDock #rewind{transition:transform .24s,opacity .2s}
+/* Compact discovery field: a single centered head + placeholder group. */
+#phone.home-mode:not(.editing) #spark.persistent-spark{opacity:0;visibility:hidden;pointer-events:none}#phone.home-mode:not(.editing) #discoverySpark{visibility:visible;display:flex;width:20px;height:20px}#phone.home-mode:not(.editing) #queryForm{gap:4px;justify-content:center}#phone.home-mode:not(.editing) #ask{flex:0 0 125px;width:125px;text-align:left}.context-action .text{font:500 14px/19px YS!important}
