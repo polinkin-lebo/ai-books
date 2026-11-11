@@ -33,3 +33,5 @@
 #phone.home-mode:not(.editing) #spark.persistent-spark{opacity:0;visibility:hidden;pointer-events:none}#phone.home-mode:not(.editing) #discoverySpark{visibility:visible;display:flex;width:20px;height:20px}#phone.home-mode:not(.editing) #queryForm{gap:4px;justify-content:center}#phone.home-mode:not(.editing) #ask{flex:0 0 125px;width:125px;text-align:left}.context-action .text{font:500 14px/19px YS!important}
 /* Pausing preserves hidden panels; only the collapsed Play button remains until scroll. */
 #phone.hidden-controls.paused-dock #audioDock{transform:none;opacity:1;pointer-events:auto}#phone.hidden-controls.paused-dock #audioDock #startAudio{pointer-events:auto}
+/* The standalone paused Play button fades in place on the next scroll. */
+#phone.hidden-controls.paused-dock-origin #audioDock{transform:none}
