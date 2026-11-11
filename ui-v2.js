@@ -1,5 +1,5 @@
 // Панели и дискавери: размеры и ассеты из 4057:14853, 14705, 14742, 14825.
-const icon=(file)=>`<img class="ui-icon" src="assets/design/${file}" alt="" draggable="false">`;
+const icon=(file)=>{if(file==='4dcdf.svg'||file==='e6a43.svg')return `<span class="lumen-head"><img src="assets/design/lumen-head.png" alt="" draggable="false"></span>`;return `<img class="ui-icon" src="assets/design/${file}" alt="" draggable="false">`;};
 let densityOpen=false,editing=false,dragging=false,keyboardLatin=false,keyboardShift=false,densityDirection='right';
 const nativeIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);phone.classList.toggle('native-ios',nativeIOS);
 density=100;
