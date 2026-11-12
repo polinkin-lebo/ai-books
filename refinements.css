@@ -35,3 +35,5 @@
 #phone.hidden-controls.paused-dock #audioDock{transform:none;opacity:1;pointer-events:auto}#phone.hidden-controls.paused-dock #audioDock #startAudio{pointer-events:auto}
 /* The standalone paused Play button fades in place on the next scroll. */
 #phone.hidden-controls.paused-dock-origin #audioDock{transform:none}
+/* Book captions determine shelf height, including after fonts finish loading. */
+.books-section{height:auto!important;min-height:0!important;padding:20px 0 24px}.books-section>h3{position:static;margin:0 20px 12px}.books-section>.book-carousel{position:static;height:auto!important;padding-bottom:3px}.book-option>span:not(.cover-frame){flex:none;display:block;height:auto;max-height:none;overflow:visible}

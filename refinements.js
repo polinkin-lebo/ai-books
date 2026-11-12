@@ -57,7 +57,7 @@ function visibleReadingBook(){if(collapsed)return null;const viewportTop=sc.scro
 for(const img of document.querySelectorAll('.discovery-book>img,.book-option>img')){const frame=document.createElement('span');frame.className='cover-frame';if(/(?:slow|thinking|talk)\.(?:jpg|png)/.test(img.dataset.coverKey||img.src))frame.classList.add('light-cover');img.replaceWith(frame);frame.append(img);}
 for(const img of discovery.querySelectorAll('.started-book>img'))img.style.borderRadius='4px';
 const sparkBeforeMorph=$('#spark').onclick;$('#spark').onclick=()=>{if(editing){endEditing();return;}if(mode==='home'||collapsed){composer();return;}sparkBeforeMorph();};
-function spaceBookShelves(){for(const section of document.querySelectorAll('.books-section')){const row=section.querySelector('.book-carousel'),height=Math.max(...[...row.children].map(e=>e.offsetHeight));row.style.height=height+'px';section.style.height=Math.max(section.offsetHeight,58+height+24)+'px';}update();}
+function spaceBookShelves(){update();}
 document.fonts.ready.then(spaceBookShelves);
 // Titles and keyboard geometry are taken from the supplied Figma frames.
 function bookHeading(title,author,chapter){return '<div class="book-title-author"><h2>'+title+'</h2><div class="book-author">'+author+'</div></div><div class="book-chapter">Глава '+chapter+'</div>';}
