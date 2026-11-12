@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.application' version '8.13.2'
+}
+
+android {
+    namespace 'dev.aibooks.reader'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'dev.aibooks.reader'
+        minSdk 28
+        targetSdk 34
+        versionCode 1
+        versionName '1.0-demo'
+    }
+}
+
+// The web and Android demos share their original locally bundled art and typefaces.
+def sharedAssets = tasks.register('collectBookAssets', Sync) {
+    into layout.buildDirectory.dir('generated/bookAssets')
+    from('../../fonts') {
+        include 'YSBooks.otf', 'YSBooks-Semibold.otf', 'YSText.ttf', 'YSText-Medium.ttf', 'Literata.ttf'
+        into 'fonts'
+    }
+    from('../../assets') {
+        include '4079-21664.png', '4079-21696.png', '4079-21740.png'
+        include 'catalog/*', 'design/*.png'
+        exclude 'design/280f3.png', 'design/331d8.png', 'design/5b7b4.png'
+    }
+}
+android.sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/bookAssets'))
+tasks.named('preBuild').configure { dependsOn sharedAssets }
