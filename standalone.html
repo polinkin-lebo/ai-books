@@ -290,7 +290,7 @@ function buildBooksSection(id,title,files,names,captions=[]){
  section.append(row);makeCarousel(row,title);
 }
 buildBooksSection('4079:21811','Почитать дальше',['666ab.png','068ff.png','ed691.png'],['Дама с собачкой','Ася','Первая любовь'],['Снова сложная любовь — только в нескольких десятках страниц','Нежнее и светлее Карениной','Больше горькой любви']);
-buildBooksSection('4079:21820','Понравилось ранее',['dbece.png','4528b.png','9edd4.png'],['Ранее понравившаяся книга','Мир','Самая страшная книга']);
+buildBooksSection('4079:21820','Понравилось ранее',['dbece.png','4528b.png','9edd4.png'],['Страшные русские сказки','Мирэ','Самая страшная книга'],['Знакомые сказки — темнее и взрослее','Сильная героиня и сложный выбор','Мрачные истории для твоего вечера']);
 discovery.querySelectorAll('.discovery-recs,.discovery-saved').forEach(el=>makeCarousel(el,el.classList.contains('discovery-recs')?'Рекомендации':'Хотели прочитать'));
 // Keep traversal and scenario selection in the same order as the final feed.
 const orderedSections=[...sections.entries()].sort((a,b)=>a[1].offsetTop-b[1].offsetTop);sections.clear();orderedSections.forEach(([id,node])=>sections.set(id,node));
